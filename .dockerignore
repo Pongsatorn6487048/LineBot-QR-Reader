@@ -1,0 +1,22 @@
+# Include any files or directories that you don't want to be copied to your
+# container here (e.g., local build artifacts, temporary files, etc.).
+
+# Ignore environment files
+.env
+
+
+# Ignore node_modules and other dependencies
+node_modules
+dist
+*.log
+
+# Docker file
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Test file
+*.spec.ts
+
+LICENSE
+README.md
