@@ -18,9 +18,11 @@ import { AppController } from './app.controller';
       entities: [__dirname + '/**/entity/*.entity{.ts,.js}'], 
       autoLoadEntities: true,
       synchronize: true,
+      /* delete this comment before docker build 
       ssl: {
         rejectUnauthorized: false,
       },
+      */
 
     },),
     LineModule,
