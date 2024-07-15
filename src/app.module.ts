@@ -18,6 +18,9 @@ import { AppController } from './app.controller';
       entities: [__dirname + '/**/entity/*.entity{.ts,.js}'], 
       autoLoadEntities: true,
       synchronize: true,
+      ssl: {
+        rejectUnauthorized: false,
+      },
 
     },),
     LineModule,

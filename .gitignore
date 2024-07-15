@@ -3,6 +3,13 @@
 /node_modules
 /build
 
+#OpenSSL
+selfsigned.crt
+selfsigned.key
+
+# Cert
+certs/
+
 # Logs
 logs
 *.log
