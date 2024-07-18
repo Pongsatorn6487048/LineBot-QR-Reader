@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@line/bot-sdk": "^9.2.2",
+    "@line/liff": "^2.23.2",
     "@nestjs/common": "^10.3.9",
     "@nestjs/config": "^3.2.2",
     "@nestjs/core": "^10.3.9",

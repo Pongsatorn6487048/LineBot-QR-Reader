@@ -27,9 +27,6 @@ COPY --chown=node:node . .
 # Copy the rest of the source files into the image.
 COPY . .
 
-COPY /cert/selfsigned.crt /etc/ssl/certs/
-COPY /cert/selfsigned.key /etc/ssl/private/
-
 # Expose the port that the application listens on.
 EXPOSE 3000
 

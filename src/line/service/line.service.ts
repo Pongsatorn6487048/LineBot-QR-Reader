@@ -9,9 +9,6 @@ import { ImageService } from 'src/db/service/image.service';
 import { MessageEntity } from 'src/db/model/message.entity';
 import { TextEntity } from 'src/db/model/text.entity';
 import { ImageEntity } from 'src/db/model/image.entity';
-import * as dotenv from 'dotenv';
-
-dotenv.config()
 
 @Injectable()
 export class LineService {
