@@ -19,10 +19,6 @@ import { HBSModule } from './hbs/hbs.module';
       entities: [__dirname + '/**/entity/*.entity{.ts,.js}'], 
       autoLoadEntities: true,
       synchronize: true,
-      ssl: {
-         rejectUnauthorized: false,
-      },
-      
 
     },),
     LineModule,
