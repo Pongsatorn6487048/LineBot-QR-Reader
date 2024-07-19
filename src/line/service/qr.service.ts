@@ -1,12 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import Jimp from 'jimp';
-//fix import later
-let QRReader = require('qrcode-reader');
+import * as QRReader from 'qrcode-reader';
 
 @Injectable() 
 export class QrService {
-  constructor(/*private readonly lineService: LineService*/) {}
-
   async decodeQR(buffer: Buffer): Promise<string> {
     try {
       const image = await Jimp.read(buffer);
@@ -21,9 +18,7 @@ export class QrService {
             resolve(result);
           }
         };
-        //image object data | bitmap include hight,width and buffer
-        qr.decode(image.bitmap);
-        
+        qr.decode(image.bitmap); 
       });
     } catch (err) {
       throw new Error('Failed to decode image | ' + err.message);

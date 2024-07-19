@@ -4,7 +4,6 @@ import { ImageEntity } from './image.entity'
 import { TextEntity } from './text.entity'
 
 @Entity('Message') 
-
 export class MessageEntity {
   @PrimaryGeneratedColumn()
   message_id: number;
@@ -12,7 +11,6 @@ export class MessageEntity {
   @ManyToOne(() => UserEntity, userEntity => userEntity.message)
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
-
 
   @OneToOne(() => ImageEntity, (imageEntity) => imageEntity.message, { cascade: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'image_id' })

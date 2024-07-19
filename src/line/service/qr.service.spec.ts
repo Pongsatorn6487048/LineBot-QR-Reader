@@ -23,7 +23,7 @@ describe('QrService', () => {
   });
   
   it('should return not URL format', async () => {
-    const filePath = path.join(__dirname, '../../../test/resource/WiFi_Password.png');
+    const filePath = path.join(__dirname, '../../../test/resource/wifi_password.png');
     const mockBuffer = fs.readFileSync(filePath)
     jest.spyOn(service, 'decodeQR').mockReturnValue(Promise.resolve('WIFI:T:WPA;S:ISP_Wifi;P:12345678;'))
     const actual = await service.decodeQR(mockBuffer);
@@ -31,7 +31,7 @@ describe('QrService', () => {
   });
 
   it('should cannot decode image', async () => {
-    const filePath = path.join(__dirname, '../../../test/resource/invalidQR.jpg');
+    const filePath = path.join(__dirname, '../../../test/resource/invalid_qr.jpg');
     const mockBuffer = fs.readFileSync(filePath)
     jest.spyOn(service, 'decodeQR').mockRejectedValue(new Error('Cannot decode image'))
     try {
@@ -55,12 +55,12 @@ describe('QrService', () => {
     expect(actual).toBe('コードは漢字・かなを効率よく表現することができます。')
   });
 
-  it('should return right result (special char+URL)r', async () => {
-    const filePath = path.join(__dirname, '../../../test/resource/myProfile.png');
+  it('should return right result (special character + URL)', async () => {
+    const filePath = path.join(__dirname, '../../../test/resource/style_color.png');
     const mockBuffer = fs.readFileSync(filePath)
-    jest.spyOn(service, 'decodeQR').mockReturnValue(Promise.resolve(':::@www.facebook/pongsatornarunrat'))
+    jest.spyOn(service, 'decodeQR').mockReturnValue(Promise.resolve('@)!+@${{https://www.google.com/}}'))
     const actual = await service.decodeQR(mockBuffer);
-    expect(actual).toBe(':::@www.facebook/pongsatornarunrat')
+    expect(actual).toBe('@)!+@${{https://www.google.com/}}')
   });
   
   it('should return right text (combine line)', async () => {
@@ -80,7 +80,7 @@ describe('QrService', () => {
     expect(actual).toBe('http://www.biccamera.com/')
   });
   it('should return URL from uncle holding qr', async () => {
-    const filePath = path.join(__dirname, '../../../test/resource/test_kanji8_holdPic.jpg');
+    const filePath = path.join(__dirname, '../../../test/resource/kanji_holdPic.jpg');
     const mockBuffer = fs.readFileSync(filePath)
     jest.spyOn(service, 'decodeQR').mockRejectedValue(new Error('Cannot decode image'))
     try {

@@ -4,7 +4,6 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
-import { HBSModule } from './hbs/hbs.module';
 
 @Module({
   imports: [
@@ -19,10 +18,12 @@ import { HBSModule } from './hbs/hbs.module';
       entities: [__dirname + '/**/entity/*.entity{.ts,.js}'], 
       autoLoadEntities: true,
       synchronize: true,
-
+      ssl: {
+        rejectUnauthorized: false
+      },
+      
     },),
     LineModule,
-    HBSModule,
   ],
   providers: [
     AppService

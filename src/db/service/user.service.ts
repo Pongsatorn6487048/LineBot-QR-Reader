@@ -14,41 +14,29 @@ export class UserService {
     let existed = await this.findExistedUser(dbInfo.userToken)
     if (existed) {
       console.log('user_id: ',existed.user_id,'username: ', existed.username,' | This User already existed')
-    }else {
+    } else {
       console.log('user_id: ',dbInfo.user_id, 'username: ', dbInfo.username, '| Save user successfully')
       return await this.dbInfoRepository.save(dbInfo);
     } 
   }
 
   async getUserByUserToken(userToken: string): Promise<UserEntity> {
-    const db = (await this.dbInfoRepository.findOne( { /*select: ['user_id'],*/ where: { userToken}}))
-    return db
+    const user = (await this.dbInfoRepository.findOne( { where: { userToken}}))
+    return user;
   }
-  
   async findAllPosts(): Promise<UserEntity[]> {
     return await this.dbInfoRepository.find();
   }
-
   async findUserById(id: number): Promise<UserEntity> {
-    const user = await this.dbInfoRepository.findOne({
-      where: { user_id: id }
-    });
-
-    if (!user) {
-      console.log('User not found!')
-    }
+    const user = await this.dbInfoRepository.findOne({where: { user_id: id }});
+    if (!user) { console.log('User not found!')}
     return user;
   }
-
   async findExistedUser(userToken: string): Promise<UserEntity> {
     return await this.dbInfoRepository.findOne( { where: {userToken}})
   }
 
-  //Optional
-  async updatePost(
-    id: number,
-    dbInfo: UserEntity,
-  ): Promise<UpdateResult> {
+  async updatePost(id: number, dbInfo: UserEntity,): Promise<UpdateResult> {
     return await this.dbInfoRepository.update(id, dbInfo);
   }
   async deletePost(id: number): Promise<DeleteResult> {

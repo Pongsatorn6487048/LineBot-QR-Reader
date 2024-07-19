@@ -4,12 +4,13 @@ import * as line from '@line/bot-sdk';
 
 @Controller('line')
 export class LineController {
-  constructor(private readonly lineService: LineService,){}
+  constructor(private readonly lineService: LineService) {}
 
   @Post('webhook')
   async webhook(@Req() req, @Res() res) {
     const signature = req.headers['x-line-signature'];
-    if (!line.validateSignature(JSON.stringify(req.body), this.lineService.getChannelSecret(), signature)) {
+    const channelSecret = process.env.LINE_CHANNEL_SECRET
+    if (!line.validateSignature(JSON.stringify(req.body), channelSecret, signature)) {
       return res.status(400).send('Invalid signature');
     }
     const events: line.WebhookEvent[] = req.body.events;
@@ -18,8 +19,6 @@ export class LineController {
     }
     return res.status(200).send('OK');
   }
-
-  //getUserProfile http://localhost:8080/line/profile/{userToken}
   @Get('profile/:id')
   async getUserProfile(@Param('id') userToken: string, @Res() res) {
     try {
@@ -63,7 +62,10 @@ export class LineController {
           <div class="container">
             <h1>User Profile</h1>
             <p><strong>Name:</strong> ${profile.displayName}</p>
+            <p><strong>Status:</strong> ${profile.statusMessage}</p>
+            <p><strong>User ID:</strong> ${profile.userId}</p>
             ${profile.pictureUrl ? `<img src="${profile.pictureUrl}" alt="User Image" />` : '<p>No image available</p>'}
+            <p><strong>Legion:</strong> ${profile.language}</p>
           </div>
         </body>
       </html>

@@ -2,7 +2,6 @@ import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'ty
 import { MessageEntity } from './message.entity';
 
 @Entity('Image') 
-
 export class ImageEntity {
   @PrimaryGeneratedColumn()
   image_id: number;

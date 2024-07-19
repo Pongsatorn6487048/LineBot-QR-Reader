@@ -14,11 +14,9 @@ export class TextService {
   async createPost(dbInfo: TextInfo): Promise<TextInfo> {
     return await this.dbInfoRepository.save(dbInfo);
   }
-
   async findAllPosts(): Promise<TextInfo[]> {
     return await this.dbInfoRepository.find({ relations: ['message'] });
   }
-
   async deletePost(id: number): Promise<DeleteResult> {
     return await this.dbInfoRepository.delete(id);
   }

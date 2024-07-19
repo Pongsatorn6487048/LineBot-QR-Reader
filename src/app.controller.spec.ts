@@ -5,7 +5,6 @@ import { UserEntity } from './db/model/user.entity';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-
 describe('UserController', () => {
   let userController: UserController;
   let userService: UserService;
@@ -25,7 +24,6 @@ describe('UserController', () => {
     userService = moduleRef.get<UserService>(UserService);
     userController = moduleRef.get<UserController>(UserController);
     dbInfoRepository = moduleRef.get<Repository<UserEntity>>(getRepositoryToken(UserEntity));
-
   });
 
   describe('findAllPosts', () => {
@@ -37,10 +35,8 @@ describe('UserController', () => {
       ]
       jest.spyOn(dbInfoRepository, 'find').mockImplementation(async () => expectedUsers)
       const actually = await userController.findAll();
-
       expect(actually).toBe(expectedUsers);
     });
-
   });
 });
 

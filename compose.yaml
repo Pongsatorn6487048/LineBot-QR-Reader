@@ -16,7 +16,6 @@ services:
     ports:
       - 3000:3000
     environment:
-      - NODE_ENV=development
       - DATABASE_HOST=${DATABASE_HOST} 
       - DATABASE_PORT=${DATABASE_PORT}
       - DATABASE_USER=${DATABASE_USER}

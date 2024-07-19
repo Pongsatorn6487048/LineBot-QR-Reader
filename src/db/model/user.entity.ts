@@ -2,7 +2,6 @@ import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { MessageEntity} from '../model/message.entity'
 
 @Entity('User') 
-
 export class UserEntity {
   @PrimaryGeneratedColumn()
   user_id: number;

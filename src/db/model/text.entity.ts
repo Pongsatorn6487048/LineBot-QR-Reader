@@ -2,7 +2,6 @@ import { Column, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'ty
 import { MessageEntity } from './message.entity';
 
 @Entity('Text') 
-
 export class TextEntity {
   @PrimaryGeneratedColumn()
   text_id: number;

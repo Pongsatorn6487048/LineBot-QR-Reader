@@ -33,7 +33,8 @@ import { ImageController } from './controller/image.controller';
       UserController, 
       MessageController, 
       TextController, 
-      ImageController],
+      ImageController
+    ],
   exports: [
     UserService,
     MessageService,
