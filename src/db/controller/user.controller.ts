@@ -15,10 +15,6 @@ export class UserController {
   async findAll(): Promise<UserEntity[]> {
     return await this.userService.findAllPosts();
   }
-  @Get('find/:user')
-  async findByUser(@Param('user') user: string): Promise<UserEntity> {
-    return await this.userService.findExistedUser(user)
-  }
   @Get(':id')
   async findUserById(@Param('id') id: number): Promise<UserEntity> {
     try {
