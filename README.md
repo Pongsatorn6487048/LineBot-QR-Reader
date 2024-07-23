@@ -1,8 +1,14 @@
-# Line Bot QR-Reader
+<p align="center">
   <a href="http://localhost:3000/" target="blank"><img src="https://i.ibb.co/nwcpgn7/line-bot-pfp.jpg" width="200" alt="Nest Logo" /></a><br>
-A Line Bot that can read qr code and reply the result.
+  <h1 align="center">Line Bot QR-Reader</h1>
+  
+  <h4 align="center">A Line Bot that can read qr code reply the result and collect history to database.</h1>
+</p>
+
 ## QR-Reader
+
 **QR-Reader** is a simple project while internship to experience coding, This project use Nest Express, Typescript and Docker
+
 <img src="https://i.ibb.co/SNYTRZk/example.png" alt="img_1" width="30%" height="30%">
 
 ## Description
@@ -15,7 +21,7 @@ A Line Bot that can read qr code and reply the result.
 $ npm install
 ```
 
-# HOW RUN PROJECT
+# HOW RUN PROJECT ❓
 This project is build in following environment:
 > **Node.js version: 22.2.0**  
 > **Nest Framwork version: 10.3.9**  
@@ -30,7 +36,7 @@ This project is build in following environment:
  
  If you want to run this project,Please following these steps:
 
-### Frist you need to create and setup `.env` like this
+### Create and setup `.env`  🔒
 
 ```plaintext
 DATABASE_HOST='localhost'
@@ -41,7 +47,7 @@ DATABASE_NAME='database'
 ```
 You can adjust your **User**, **Password**, **Name** as whatever you want.
 
-### Create Line Provider & Channel
+### Create Line Provider & Channel 📺
 Direct to [Line Developer Console](https://developers.line.biz/console/)
 * Create a provider
 * Select "Create Messaging API Channel"
@@ -55,13 +61,7 @@ LINE_CHANNEL_SECRET='9mmaspqbsos6f'
 ```
 Note: You can get "LINE_CHANNEL_ACCESS_TOKEN" from the bottom of "Messaging API" Tab by click "issue" for the first time.
 
-### Running the app
-run application in local
-```bash
-$ npm start
-```
-
-### NGROK
+### NGROK 🌐
 To make server connect with Line Web hook, We need to make our local port can access by public with Ngrok [Download](https://dashboard.ngrok.com/get-started/setup/windows)
 * Create Account
 * Download and run Ngrok
@@ -72,19 +72,32 @@ Run this command on Ngrok terminal to forward port 3000 to public
 ngrok http 3000
 ```
 
-Note: run ngrok command while *npm start* is running
+Note: You can run ngrok before and after run *npm start* 
 
-### Webhook
+### Webhook 🪝
 After we got a new URL from Ngrok, We need to direct to Line Dev Console to define Web hook URL.
 * Go to channel that we create early.
-* In *Messaging API* tab click edit at Web hook URL and paste a new URL from Ngrok and lick *update*
-* Click *Verify* If success it mean we can use this bot
+* In *Messaging API* tab click edit at Web hook URL and paste a new URL from Ngrok with this path
 
-### Add friend bot
+```plaintext
+https://xxxxngrokxxxx.ngrok-free.app/line/webhook
+```
+  
+* Click *update* and *Verify* If success it mean we can use this bot ✅
+
+### Add friend bot 🤖
 Last step we need to add this bot as a friend first by
 * Navigate to *Messaging API* tab, You can add by *Bot ID* or *QR Code*
-  
-Let's chat & send image qr and wait for the result.🎉
+
+### Running the app 📱
+run application in local
+```bash
+$ npm start
+```
+
+### 🌟🏆 Completed, let's send QR and wait for the result.🎉
+
+
 
 ## Test (Local)
 
