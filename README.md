@@ -5,11 +5,24 @@
   <h4 align="center">A Line Bot that can read qr code reply the result and collect history to database.</h1>
 </p>
 
+<div align="center">
+  <img src="https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS">
+  <img src="https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB" alt="ExpressJS">
+  <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white" alt="Jest">
+  <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
+  <img src="https://img.shields.io/badge/Line-00C300?style=for-the-badge&logo=line&logoColor=white" alt="Line">
+  <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white" alt="Postgres">
+  <img src="https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white" alt="AWS">
+</div>
+
 ## QR-Reader
 
 **QR-Reader** is a simple project while internship to experience coding, This project use Nest Express, Typescript and Docker
 
-<img src="https://i.ibb.co/SNYTRZk/example.png" alt="img_1" width="30%" height="30%">
+<div align="center">
+  <img src="https://i.ibb.co/SNYTRZk/example.png" alt="img_1" width="30%" height="30%">
+</div>
 
 ## Description
 
