@@ -235,7 +235,7 @@ Now we got all we need (RDS, Image) we're at the last step of deploy
 
 Now your application have public domain at **Default domain**  
 
-### 4. Connect Web hook with new domain
+### 5. Connect Web hook with new domain
 Navigate to [Line Developer Console](https://developers.line.biz/console/) to change Web hook URL to new URL from App Runner
 * Change Web hook URL to **New URL** with same path like this.
   ```bash
