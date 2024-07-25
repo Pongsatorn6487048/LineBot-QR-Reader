@@ -50,6 +50,7 @@ This project is build in following environment:
  - [Line Developer Account](https://developers.line.biz/console/) for provide a channel bot
  - [NGROK Account & Install](https://ngrok.com/) for port forwarding to public
  - [AWS Account](https://aws.amazon.com/free/?nc1=h_ls&all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all) [Optional if you want to deploy]
+ - [PostgreSQL 16.3](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) database
  
 ## 6 Steps to start
 
