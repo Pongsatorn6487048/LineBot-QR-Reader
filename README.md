@@ -19,7 +19,6 @@
   
 </div>
 
-
 ## QR-Reader  
 
 **QR-Reader** is a simple project while internship to experience coding, This project use Nest Express, Typescript and Docker
@@ -61,7 +60,7 @@ DATABASE_HOST='localhost'
 DATABASE_PORT=5432
 DATABASE_USER='postgres'
 DATABASE_PASSWORD='123456789'
-DATABASE_NAME='database'
+DATABASE_NAME='LineBot'
 ```
 You can adjust your **User**, **Password**, **Name** as whatever you want.
 
@@ -71,13 +70,16 @@ Direct to [Line Developer Console](https://developers.line.biz/console/)
 * Select "Create Messaging API Channel"
   - Channel type: "Messaging API"
   - Fill another information on your own
-* Get your channel secret & channel access token and put it in your `.env` like this
+  - **Create**
+  - Get "LINE_CHANNEL_ACCESS_TOKEN" from the bottom of "Messaging API" Tab by click "issue" for the first time.
+
+Get your channel secret & channel access token and put it in your `.env` like this
 
 ```plaintext
 LINE_CHANNEL_ACCESS_TOKEN='abcdefghijklmnopqrstuvwxyz'
 LINE_CHANNEL_SECRET='9mmaspqbsos6f'
 ```
-Note: You can get "LINE_CHANNEL_ACCESS_TOKEN" from the bottom of "Messaging API" Tab by click "issue" for the first time.
+
 
 ### 3. NGROK 🌐
 To make server connect with Line Web hook, We need to make our local port can access by public with Ngrok [Download](https://dashboard.ngrok.com/get-started/setup/windows)
@@ -126,25 +128,29 @@ This is tools we used to deploy
 > **Database management: pgAdmin 4**  
 > **Build: Docker**  
 > **Cloud provider: AWS**
+>  - AWS CLI (Command Line Interface)
 >  - AWS ECR (Elastic Container Registry)
 >  - AWS RDS (Relational Database Instance)
 >  - AWS App Runner
 
 
 ### Prerequisite
+You must have all of this resource before start to deploy
+ - [AWS CLI Install](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) for run aws command on command prompt
  - [Docker Account & Install](https://www.docker.com/) for build project image
  - [AWS Account ](https://aws.amazon.com/free/?nc1=h_ls&all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all) for access AWS Console and other services
 
-## xx Steps to start
+## 6. Steps to deploy
 
 There is so many configuration, Please follow these step
 
-***Note:*** If no need Database you can skip step 1-2, Which mean you need to change code too.
+> [!NOTE]
+> If you already have IAM User you can skip step 3.
 
 ### 1. Add SSL to make RDS not reject unauthorized
 RDS (Relational Database Instance) they're force us to use SSL connection only but we not have SSL certificated for Postgres DB, here is some solution
 * In `app.module.ts` add this configuration below ***syncronize***
-  ```bash
+  ```typescript
         ssl: {
         rejectUnauthorized: false
       },
@@ -177,7 +183,7 @@ Navigate to [AWS Console](https://aws.amazon.com/console/) and search for RDS.
 * Wait until status turn to "Available" and Click to see more information
 * Copy ***EndPoint*** from Connectivity & Security tab and replace at ***localhost*** in your `.env`
   ```bash
-  DATABASE_HOST='{HERE}' 
+  DATABASE_HOST='...' //Here
   DATABASE_PORT=5432
   DATABASE_USER='postgres'
   DATABASE_PASSWORD='123456789'
@@ -185,26 +191,34 @@ Navigate to [AWS Console](https://aws.amazon.com/console/) and search for RDS.
   ```
 * Test connection with ***npm start*** or ***pgAdmin***
 
+### 3. Create & Login with IAM User 
+* Go to search box type "IAM" -> User -> Create user
+* After name for user, Select ◉ Attach policy directly
+* Assign "AdministratorAccess" role for user and create
+* Inspect user info and click "Create Access Key" -> Select ◉ CLI
+* Coppy Access Key and Secret Access Key
 
-### 3. Build & Push Image to ECR
+Now we can login with these steps
+* Run this command in command prompt
+  ```bash
+  aws configure
+  ```
+* Add Cretentials from previous step to use for login in next step
+
+### 4. Build & Push Image to ECR
 We need image to deploy with AWS, So we need to build it first
-* After install completed, Open docker on desktop
+* After npm install completed, Open docker on desktop
 * Run this command on your project terminal
 ```bash
 docker compose up --build
 ```
 If you didn't change any docker config we'll get image name "aws-linebot"
 
-* After build complete, Navigate and login to [AWS Console](https://aws.amazon.com/console/)
-* Go to search box type "ECR" -> Create private repository there ***( recommanded use same name as you image )***
+* In AWS search for "ECR" -> Create private repository there ***( recommand to use same name as you image )***
 * Enter repository -> Click on the top right "View push command" button you'll see command, follow AWS document
+* After push complete, Copy image URI for the next step
 
-Here is checklist for you   
-☐ Create IAM User with Access permission   
-☐ Config CLI Cretentials & Login CLI   
-☐ Push image success   
-
-### 4. Launch App Runner Service
+### 5. Launch App Runner Service
 Now we got all we need (RDS, Image) we're at the last step of deploy
 * Go to **App Runner** by search bar
 * Create service
@@ -235,7 +249,7 @@ Now we got all we need (RDS, Image) we're at the last step of deploy
 
 Now your application have public domain at **Default domain**  
 
-### 5. Connect Web hook with new domain
+### 6. Connect Web hook with new domain
 Navigate to [Line Developer Console](https://developers.line.biz/console/) to change Web hook URL to new URL from App Runner
 * Change Web hook URL to **New URL** with same path like this.
   ```bash
