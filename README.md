@@ -80,8 +80,13 @@ LINE_CHANNEL_ACCESS_TOKEN='abcdefghijklmnopqrstuvwxyz'
 LINE_CHANNEL_SECRET='9mmaspqbsos6f'
 ```
 
+### 3. Running the app 📱
+run application in local
+```bash
+$ npm start
+```
 
-### 3. NGROK 🌐
+### 4. NGROK 🌐
 To make server connect with Line Web hook, We need to make our local port can access by public with Ngrok [Download](https://dashboard.ngrok.com/get-started/setup/windows)
 * Create Account
 * Download and run Ngrok
@@ -94,7 +99,7 @@ ngrok http 3000
 
 ***Note:*** You can run ngrok before and after run *npm start* 
 
-### 4. Webhook 🪝
+### 5. Webhook 🪝
 After we got a new URL from Ngrok, We need to direct to Line Dev Console to define Web hook URL.
 * Go to channel that we create early.
 * In *Messaging API* tab click edit at Web hook URL and paste a new URL from Ngrok with this path
@@ -105,15 +110,9 @@ https://xxxxngrokxxxx.ngrok-free.app/line/webhook
   
 * Click *update* and *Verify* If success it mean we can use this bot ✅
 
-### 5. Add friend bot 🤖
+### 6. Add friend bot 🤖
 Last step we need to add this bot as a friend first by
 * Navigate to *Messaging API* tab, You can add by *Bot ID* or *QR Code*
-
-### 6. Running the app 📱
-run application in local
-```bash
-$ npm start
-```
 
 ### 🌟🏆 Completed, let's send QR and wait for the result.🎉
 
