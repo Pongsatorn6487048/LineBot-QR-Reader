@@ -50,7 +50,7 @@ This project is build in following environment:
  - [Line Developer Account](https://developers.line.biz/console/) for provide a channel bot
  - [NGROK Account & Install](https://ngrok.com/) for port forwarding to public
  - [AWS Account](https://aws.amazon.com/free/?nc1=h_ls&all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all) [Optional if you want to deploy]
- - [PostgreSQL 16.3](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) database
+ - [PostgreSQL 16.3](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) database server for manage and monitor
  
 ## 6 Steps to start
 
@@ -72,14 +72,18 @@ Direct to [Line Developer Console](https://developers.line.biz/console/)
   - Channel type: "Messaging API"
   - Fill another information on your own
   - **Create**
+  - In Messaging API tab don't forget to Enable ***Web hook*** and disable **Auto-Reply**
   - Get "LINE_CHANNEL_ACCESS_TOKEN" from the bottom of "Messaging API" Tab by click "issue" for the first time.
 
 Get your channel secret & channel access token and put it in your `.env` like this
 
 ```plaintext
 LINE_CHANNEL_ACCESS_TOKEN='abcdefghijklmnopqrstuvwxyz'
-LINE_CHANNEL_SECRET='9mmaspqbsos6f'
+LINE_CHANNEL_SECRET='pk1abs5maspqbsos6f'
 ```
+
+> [!NOTE]
+> Reference: Line Messaging API document click [Here](https://developers.line.biz/en/docs/messaging-api/overview/)
 
 ### 3. Running the app 📱
 run application in local
@@ -98,7 +102,8 @@ Run this command on Ngrok terminal to forward port 3000 to public
 ngrok http 3000
 ```
 
-***Note:*** You can run ngrok before and after run *npm start* 
+> [!NOTE]
+> You can run ngrok before and after run *npm start* it doesn't have any effect.
 
 ### 5. Webhook 🪝
 After we got a new URL from Ngrok, We need to direct to Line Dev Console to define Web hook URL.
@@ -118,13 +123,13 @@ Last step we need to add this bot as a friend first by
 ### 🌟🏆 Completed, let's send QR and wait for the result.🎉
 
 ## Test (Local)
-
+Use Jest framework and test different scenario with local image in project
 ```bash
 $ npm test
 ```
 
 # How to Deploy
-This is tools we used to deploy
+This is tools we need to use for deploy
 > **Database management: pgAdmin 4**  
 > **Build: Docker**  
 > **Cloud provider: AWS**
@@ -132,7 +137,6 @@ This is tools we used to deploy
 >  - AWS ECR (Elastic Container Registry)
 >  - AWS RDS (Relational Database Instance)
 >  - AWS App Runner
-
 
 ### Prerequisite
 You must have all of this resource before start to deploy
@@ -143,9 +147,6 @@ You must have all of this resource before start to deploy
 ## 6. Steps to deploy
 
 There is so many configuration, Please follow these step
-
-> [!NOTE]
-> If you already have IAM User you can skip step 3.
 
 ### 1. Add SSL to make RDS not reject unauthorized
 RDS (Relational Database Instance) they're force us to use SSL connection only but we not have SSL certificated for Postgres DB, here is some solution
@@ -192,6 +193,10 @@ Navigate to [AWS Console](https://aws.amazon.com/console/) and search for RDS.
 * Test connection with ***npm start*** or ***pgAdmin***
 
 ### 3. Create & Login with IAM User 
+
+> [!NOTE]
+> If you already have AWS IAM User you can skip this step.
+
 * Go to search box type "IAM" -> User -> Create user
 * After name for user, Select ◉ Attach policy directly
 * Assign "AdministratorAccess" role for user and create
@@ -209,17 +214,18 @@ Now we can login with these steps
 We need image to deploy with AWS, So we need to build it first
 * After npm install completed, Open docker on desktop
 * Run this command on your project terminal
+
 ```bash
 docker compose up --build
 ```
 If you didn't change any docker config we'll get image name "aws-linebot"
 
 * In AWS search for "ECR" -> Create private repository there ***( recommand to use same name as you image )***
-* Enter repository -> Click on the top right "View push command" button you'll see command, follow AWS document
+* Enter repository -> Click on the top right "View push command" button you'll see command, follow AWS document to login and push
 * After push complete, Copy image URI for the next step
 
 ### 5. Launch App Runner Service
-Now we got all we need (RDS, Image) we're at the last step of deploy
+Now we got all we need (RDS, Image URI) we're at the last step of deploy
 * Go to **App Runner** by search bar
 * Create service
 * Here is easy config
@@ -229,7 +235,7 @@ Now we got all we need (RDS, Image) we're at the last step of deploy
   - Deployment trigger: **Manual** //it's up to you, in my case is manual
   - ECR access role: **existing service role**
   - **Next**
-  - Service name: ... //you service name
+  - Service name: **...** //you service name
   - Port: 3000
   - Add environment variable with this format
 
@@ -252,10 +258,11 @@ Now your application have public domain at **Default domain**
 ### 6. Connect Web hook with new domain
 Navigate to [Line Developer Console](https://developers.line.biz/console/) to change Web hook URL to new URL from App Runner
 * Change Web hook URL to **New URL** with same path like this.
+  
   ```bash
   https://newdomain.ap-southest-1.awsapprunner.com/line/webhook
   ```
-  * Update and Verify Web hook
+* Update and Verify Web hook ✅
 
 
 
