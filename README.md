@@ -21,7 +21,7 @@
 
 ## QR-Reader  
 
-**QR-Reader** is a simple project while internship to experience coding, This project use Nest Express, Typescript and Docker
+**QR-Reader** is a simple project while internship to experience coding, This project use Nest, Express.js, Typescript, PostgreSQL, Docker, AWS RDS and Deploy with AWS App Runner
 
 <div align="center">
   <img src="https://i.ibb.co/SNYTRZk/example.png" alt="img_1" width="30%" height="30%">
@@ -29,7 +29,12 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is the complete deployment flow for this document, showing all the services we actually need.
+
+<div align="center">
+  <img src="https://i.ibb.co/jRQpW13/flow.png" alt="flow">
+</div>
+
 
 # Installation
 Locate to project folder directory and run this command in terminal.
@@ -75,7 +80,7 @@ Direct to [Line Developer Console](https://developers.line.biz/console/)
   - In Messaging API tab don't forget to Enable ***Web hook*** and disable **Auto-Reply**
   - Get "LINE_CHANNEL_ACCESS_TOKEN" from the bottom of "Messaging API" Tab by click "issue" for the first time.
 
-Get your channel secret & channel access token and put it in your `.env` like this
+Get your channel secret & channel access token and put it in your `.env` like this example
 
 ```plaintext
 LINE_CHANNEL_ACCESS_TOKEN='abcdefghijklmnopqrstuvwxyz'
@@ -150,7 +155,7 @@ There is so many configuration, Please follow these step
 
 ### 1. Add SSL to make RDS not reject unauthorized
 RDS (Relational Database Instance) they're force us to use SSL connection only but we not have SSL certificated for Postgres DB, here is some solution
-* In `app.module.ts` add this configuration below ***syncronize***
+* In `app.module.ts` add this in database configuration below ***syncronize***
   ```typescript
         ssl: {
         rejectUnauthorized: false
@@ -190,7 +195,9 @@ Navigate to [AWS Console](https://aws.amazon.com/console/) and search for RDS.
   DATABASE_PASSWORD='123456789'
   DATABASE_NAME='LineBot'
   ```
-* Test connection with ***npm start*** or ***pgAdmin***
+
+> [!NOTE]
+> You can test connection with ***npm start*** or connect server with ***pgAdmin*** by create new server with RDS endpoint.
 
 ### 3. Create & Login with IAM User 
 
