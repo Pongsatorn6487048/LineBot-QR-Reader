@@ -2,7 +2,7 @@
   <a href="http://localhost:3000/" target="blank"><img src="https://i.ibb.co/nwcpgn7/line-bot-pfp.jpg" width="200" alt="Nest Logo" /></a><br>
   <h1 align="center">Line Bot QR-Reader</h1>
   
-  <h4 align="center">A Line Bot that can read qr code reply the result and collect history to database.</h1>
+  <h4 align="center">A Line Bot that can read qr code then reply the result and collect chat history to database.</h1>
 </p>
 
 <div align="center">
@@ -43,7 +43,7 @@ Locate to project folder directory and run this command in terminal.
 $ npm install
 ```
 
-# HOW RUN PROJECT ❓
+# HOW RUN PROJECT ❓ 
 This project is build in following environment:
 > **Node.js version: 22.2.0**  
 > **Nest Framwork version: 10.3.9**  
@@ -68,7 +68,6 @@ DATABASE_USER='postgres'
 DATABASE_PASSWORD='123456789'
 DATABASE_NAME='LineBot'
 ```
-You can adjust your **User**, **Password**, **Name** as whatever you want.
 
 ### 2. Create Line Provider & Channel 📺
 Direct to [Line Developer Console](https://developers.line.biz/console/)
@@ -127,7 +126,7 @@ Last step we need to add this bot as a friend first by
 
 ### 🌟🏆 Completed, let's send QR and wait for the result.🎉
 
-## Test (Local)
+## Test (Optional)
 Use Jest framework and test different scenario with local image in project
 ```bash
 $ npm test
@@ -161,6 +160,8 @@ RDS (Relational Database Instance) they're force us to use SSL connection only b
         rejectUnauthorized: false
       },
   ```
+> [!NOTE]
+> Reference for the [Database Certificated Authority](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL.html).
 
 ### 2. Create RDS & Parameter Group
 We gonna change from local database to Instance Database and test connection.
@@ -172,14 +173,17 @@ Navigate to [AWS Console](https://aws.amazon.com/console/) and search for RDS.
   - Parameter group family: **Postgres 16**
   - **Create**
   - Edit parameter group we just created
-  - Search for "rds.force_ssl" and change value from 1 to 0 //this step will disable SSL connection
+  - Search for "rds.force_ssl" and change value from 1 to 0
+    > this step will disable SSL connection for RDS
 * Back to Database on the left panel and we gonna Create Database, Here is some important config 
   - Engine type: **Postgres**
   - Template: **◉ Production or Free Tier**
-  - Available and Durability: **◉ Single DB Instace** //no need to select if free tier
+  - Available and Durability: **◉ Single DB Instace**
+    > no need to select if free tier
   - Master username: **postgres**
   - Credentials management: **◉ Self Manage**
-  - Master Password: **123456789** //same as your `.env`
+  - Master Password: **123456789**
+    > same as your `.env` & confirm your password
   - Connectivity: **◉ Don't connect to an EC2 resource**
   - Public Access: **Yes**
   - Database port: **5432**
@@ -197,7 +201,7 @@ Navigate to [AWS Console](https://aws.amazon.com/console/) and search for RDS.
   ```
 
 > [!NOTE]
-> You can test connection with ***npm start*** or connect server with ***pgAdmin*** by create new server with RDS endpoint.
+> After finish step 2, You can test database connection with ***npm start*** or connect with ***pgAdmin*** by create new server with RDS endpoint.
 
 ### 3. Create & Login with IAM User 
 
@@ -219,17 +223,18 @@ Now we can login with these steps
 
 ### 4. Build & Push Image to ECR
 We need image to deploy with AWS, So we need to build it first
-* After npm install completed, Open docker on desktop
+* Open docker desktop
 * Run this command on your project terminal
-
-```bash
-docker compose up --build
-```
-If you didn't change any docker config we'll get image name "aws-linebot"
+  ```bash
+  docker compose up --build
+  ```
+  
+If you didn't change any docker configuration you will get image name "aws-linebot:lastest"
 
 * In AWS search for "ECR" -> Create private repository there ***( recommand to use same name as you image )***
-* Enter repository -> Click on the top right "View push command" button you'll see command, follow AWS document to login and push
-* After push complete, Copy image URI for the next step
+* Enter repository -> Click on the top right "View push command" button you'll see command, ****<u>asd</u>follow AWS document**** to login and push
+* After push complete, `Copy` **image URI** inside repository for the next step
+  
 
 ### 5. Launch App Runner Service
 Now we got all we need (RDS, Image URI) we're at the last step of deploy
@@ -238,12 +243,15 @@ Now we got all we need (RDS, Image URI) we're at the last step of deploy
 * Here is easy config
   - Repository Type: **Container Registry**
   - Provider: **Amazon ECR**
-  - Container Image URI: **{IMAGE URI HERE}**
-  - Deployment trigger: **Manual** //it's up to you, in my case is manual
+  - Container Image URI: `IMAGE URI`
+    > Image URI from image in ECR repository
+  - Deployment trigger: **Manual**
+    > it's up to you, in my case is manual
   - ECR access role: **existing service role**
-  - **Next**
-  - Service name: **...** //you service name
-  - Port: 3000
+  - go **Next**
+  - Service name:  **...**
+    > name your service
+  - Port: **3000**
   - Add environment variable with this format
 
 |   Source   | Environment Variable Name | Environment Variable Value |
@@ -256,21 +264,25 @@ Now we got all we need (RDS, Image URI) we're at the last step of deploy
 | Plain text | LINE_CHANNEL_ACCESS_TOKEN |   //LINE ACCESS TOKEN//    |
 | Plain text | LINE_CHANNEL_SECRET       |   //LINE CHANNEL SECRET//  |
 
+ 
+> [!NOTE]
+> This environment should have be the same as your local `.env`
+
 * Let all config left default.   
 * **Next** then Confirm you configuration and ***Create & Deploy***  
 * Wait until Service status is **Active** then click service to see *Service Overview*
 
-Now your application have public domain at **Default domain**  
+Now you can see application public domain at **Default domain** 
 
 ### 6. Connect Web hook with new domain
 Navigate to [Line Developer Console](https://developers.line.biz/console/) to change Web hook URL to new URL from App Runner
 * Change Web hook URL to **New URL** with same path like this.
   
   ```bash
+  //EXAMPLE
   https://newdomain.ap-southest-1.awsapprunner.com/line/webhook
   ```
 * Update and Verify Web hook ✅
-
 
 
 Let's try your Chat Bot!! 🤖💬
