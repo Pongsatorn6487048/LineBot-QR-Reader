@@ -27,8 +27,4 @@ export class MessageController {
   async updateText(@Param('id') id: number, @Body() updateData: number): Promise<MessageEntity> {
     return this.messageService.updateTextInMessage(id, updateData);
   }
-  @Put(':id')
-  async updateImage(@Param('id') id: number, @Body() updateData: number): Promise<MessageEntity> {
-    return this.messageService.updateImageInMessage(id, updateData);
-  }
 }
