@@ -3,7 +3,7 @@ import { Controller, Get, Res } from '@nestjs/common';
 @Controller()
 export class AppController {
   @Get()
-  getHello(@Res() res) {
+  landingPage(@Res() res) {
     try {
       const html = `
       <!DOCTYPE html>
